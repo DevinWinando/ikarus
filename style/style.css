@@ -1,0 +1,156 @@
+#form-check-label1,
+#form-check-label2 {
+  padding: 6.5px 0px;
+  border-radius: 5px;
+  border: 1px solid rgb(128, 128, 128);
+  width: 50% !important;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+}
+
+.card {
+  border: 0;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 .fw-bold {
+  font-size: 10px;
+}
+
+.full,
+.col-4 .full {
+  border: 3px solid red;
+}
+
+.color-dg {
+  color: red;
+}
+
+.full .availability {
+  background-color: red;
+  height: 6rem;
+  border-radius: 5%;
+}
+
+.card .availability {
+  box-shadow: inset -1px 1px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem;
+  border-radius: 5%;
+  margin-right: 0;
+}
+
+.btn-detail {
+  margin-right: 0.8rem;
+}
+
+.modal-shadow {
+  box-shadow: inset -1px 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-shadow .modal-body {
+  padding-bottom: 0;
+  min-height: 10rem;
+}
+
+.room {
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.select-wrapper {
+  background-color: #fff;
+  display: inline-block;
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: "";
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top: 3px solid rgb(98, 139, 252);
+  border-right: 3px solid rgb(98, 139, 252);
+  border-left: 3px solid rgb(98, 139, 252);
+  width: 1.2rem;
+  height: 1.2rem;
+  position: absolute;
+  top: 0.6rem;
+  right: 1.3rem;
+  z-index: 20;
+  animation: spin 1.5s linear infinite;
+}
+
+.loading-form-select {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  -moz-padding-start: calc(0.75rem - 3px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: none !important;
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #e9ecef;
+}
+
+.loader {
+  border: 0.5rem solid transparent;
+  border-top: 0.5rem solid #3498db;
+  border-right: 0.5rem solid #3498db;
+  border-left: 0.5rem solid #3498db;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 1.5s linear infinite;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(17, 17, 17);
+  opacity: 0.7;
+  z-index: 100;
+}
+
+.none {
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn-phone,
+  .btn-loc,
+  .btn-detail {
+    width: 100%;
+  }
+
+  .btn-loc,
+  .btn-detail {
+    margin: 0.4rem 0 0 0;
+  }
+
+  .full .availability {
+    height: 3rem;
+    width: 100%;
+    background-color: red;
+    border-radius: 5%;
+  }
+}
