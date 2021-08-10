@@ -5,37 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" />
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
     <link rel="stylesheet" href="style/style.css" />
 
     <title>Data Covid</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="../index.html">
-          <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top" />
-          COVID
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand ms-4 fs-2" href="#"><span class="badge bg-success ">IKARUS</span> </a>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="../index.html">Beranda</a>
-            <a class="nav-link active" href="#">Covid</a>
-            <a class="nav-link active" href="#">Rujukan</a>
-          </div>
-        </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup"></div>
+        
       </div>
     </nav>
 
     <section id="form">
       <form action="">
-        <div class="container-lg mt-5">
+        <div class="container-lg pt-4 pb-4">
           <div class="row justify-content-center">
             <div class="col-lg-10 col-12">
               <div class="row">
                 <div class="col-lg-4">
+                  <label class="mb-2">Pilih Jenis Tempat Tidur</label>
                   <div class="radio-group d-flex">
                     <div class="text-center me-2" id="form-check-label1" onclick="checkRadio1()">
                       <input type="radio" name="jenis" id="covidRadios1" value="1" class="radio-btn" checked />
@@ -50,18 +43,24 @@
                 </div>
 
                 <div class="col-lg-3">
-                  <select class="form-select provinsi">
-                    <option value="" disabled selected hidden>Pilih Provinsi</option>
-                  </select>
+                  <label class="mb-2">Provinsi</label>
+                  <div>
+                    <select class="form-select provinsi">
+                      <option value="" disabled selected hidden>Pilih Provinsi</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div class="col-lg-3">
-                  <select class="form-select kota" disabled>
-                    <option value="" disabled selected hidden class="text-muted">Pilih Provinsi Dahulu</option>
-                  </select>
+                  <label class="mb-2">Kab/Kota</label>
+                  <div>
+                    <select class="form-select kota" disabled>
+                      <option value="" disabled selected hidden class="text-muted">Pilih Provinsi Dahulu</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div class="col-lg-2 d-grid gap-2">
+                <div class="col-lg-2 d-flex align-self-end">
                   <button type="button" class="btn btn-primary search-btn">search</button>
                 </div>
               </div>
@@ -74,9 +73,7 @@
     <section id="hospital">
       <div class="container">
         <div class="row mt-5 justify-content-center">
-          <div class="col-lg-10 col-12 cardRs">
-            <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${rs.id}" data-tipebed="${cariTypeBed()}">Detail</button>
-          </div>
+          <div class="col-lg-10 col-12 cardRs"></div>
         </div>
       </div>
     </section>
@@ -89,8 +86,37 @@
       </div>
     </section>
 
-    <div class="loading position-fixed top-50 start-50 translate-middle none">
-      <div class="loader position-absolute top-50 start-50 translate-middle" role="status">
+    <section id="footer">
+      <div class="container">
+        <div class="about">
+          <div class="row">
+            <div class="col-lg-4">
+              <h5>API Source</h5>
+              <a href="https://rs-bed-covid-api.vercel.app/" target="_blank" rel="noopener noreferrer">Satya Wikananda</a>
+            </div>
+            <div class="col-lg-4">
+              <h5>Situs Penting</h5>
+              <a href="" target="_blank" rel="noopener noreferrer">WHO</a>
+              <a href="https://covid19.go.id/" target="_blank" rel="noopener noreferrer">Situs Resmi Pemerintah Untuk Covid-19</a>
+              <a href="https://yankes.kemkes.go.id/app/siranap" target="_blank" rel="noopener noreferrer">SIRANAP</a>
+            </div>
+            <div class="col-lg-4">
+              <h5>Kontak</h5>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores molestias sit minus atque. Facere, repellendus assumenda cumque nemo dolorem delectus.</p>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="footer mb-2">
+          <div class="row">
+            <div class="col text-center"><p>©2021. Built by Devin Winando</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="loading position-fixed top-0 end-0 none">
+      <div class="loader" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>

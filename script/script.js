@@ -47,6 +47,7 @@ searchBtn.addEventListener("click", async function () {
 // Saat detail button diclick, lakukan fetch detail, lalu tampilkan data tersebut
 document.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-detail")) {
+    modalLoading();
     const detail = await fetchDetailRs(e.target.dataset.idhospital, e.target.dataset.tipebed);
     console.log(detail);
     tampilDetailRs(detail);
@@ -73,16 +74,6 @@ async function fetchKota(idProv) {
   }
 }
 
-async function fetchDetailRs(idHospital, tipeBed) {
-  try {
-    const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-bed-detail?hospitalid=" + idHospital + "&type=" + tipeBed);
-    const detailRs = await response.json();
-    return detailRs.data;
-  } catch (e) {
-    return console.log(e);
-  }
-}
-
 async function fetchRs(idProv, idKota, tipeBed) {
   pageLoading();
   try {
@@ -92,6 +83,16 @@ async function fetchRs(idProv, idKota, tipeBed) {
     return rs.hospitals;
   } catch (err) {
     console.log(err);
+  }
+}
+
+async function fetchDetailRs(idHospital, tipeBed) {
+  try {
+    const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-bed-detail?hospitalid=" + idHospital + "&type=" + tipeBed);
+    const detailRs = await response.json();
+    return detailRs.data;
+  } catch (e) {
+    return console.log(e);
   }
 }
 
@@ -115,11 +116,12 @@ function tampilKota(kota) {
 }
 
 function tampilCardRs(rs) {
+  console.log(rs);
   hidePageLoading();
   infoRs = `<h3 class="fw-bold mb-4 text-center">Daftar Rumah Sakit</h3>`;
   tipeBed = cariTypeBed();
 
-  if (!rs.length) {
+  if (rs.length === 0) {
     infoRs += `<h5 class="fw-bold text-center">Data Tidak Ditemukan</h5>`;
   }
 
@@ -137,7 +139,7 @@ function tampilCardRs(rs) {
 }
 
 function tampilRsCovid(rs) {
-  infoRs += `<div class="card mt-4">
+  infoRs += `<div class="card available mt-3">
                         <div class="card-body">
                           <div class="row">
                             <div class="col">
@@ -155,13 +157,20 @@ function tampilRsCovid(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row mt-5 justify-content-center">
+                          <div class="row mt-4 justify-content-center">
                             <div class="col d-flex align-items-center ">
-                              <a href="#" class="btn btn-primary fw-bold btn-phone">${rs.phone}</a>
+                            ${(() => {
+                              return rs.phone == null
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
+                            })()}
+                              
                             </div>
                             <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                              <button type="button" class="btn btn-primary fw-bold me-2 btn-loc">Lokasi</button>
-                              <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${rs.id}" data-tipebed="${cariTypeBed()}">Detail</button>
+                              
+                              <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${
+                                rs.id
+                              }" data-tipebed="${cariTypeBed()}">Detail<i class="fas fa-arrow-right ms-2"></i></button>
                             </div>
                           </div>
                         </div>
@@ -169,7 +178,7 @@ function tampilRsCovid(rs) {
 }
 
 function tampilRsCovidFull(rs) {
-  infoRs += `<div class="card full mt-4">
+  infoRs += `<div class="card full mt-3">
                         <div class="card-body">
                           <div class="row">
                             <div class="col">
@@ -183,13 +192,20 @@ function tampilRsCovidFull(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row mt-5">
+                          <div class="row mt-4">
                             <div class="col">
-                              <a href="#" class="btn btn-primary fw-bold btn-phone">${rs.phone}</a>
+                            ${(() => {
+                              return rs.phone == null
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
+                            })()}
                             </div>
                             <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                              <button type="button" class="btn btn-primary fw-bold me-2 btn-loc">Lokasi</button>
-                              <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${rs.id}" data-tipebed="${cariTypeBed()}">Detail</button>
+                              
+
+                              <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${
+                                rs.id
+                              }" data-tipebed="${cariTypeBed()}">Detail<i class="fas fa-arrow-right ms-2"></i></button>
                             </div>
                           </div>
                         </div>
@@ -197,7 +213,7 @@ function tampilRsCovidFull(rs) {
 }
 
 function tampilRsNonCovid(rs, bed) {
-  infoRs += `<div class="card mt-4">
+  infoRs += `<div class="card mt-3">
           <div class="card-body">
             <div class="row">
               <div class="col">
@@ -242,11 +258,18 @@ function tampilRsNonCovid(rs, bed) {
             </div>
             <div class="row mt-5 justify-content-center">
               <div class="col d-flex align-items-center">
-                <a href="#" class="btn btn-primary fw-bold btn-phone">${rs.phone}</a>
+              ${(() => {
+                return rs.phone == null
+                  ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                  : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
+              })()}
               </div>
               <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                <button type="button" class="btn btn-primary fw-bold me-2 btn-loc">Lokasi</button>
-                <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${rs.id}" data-tipebed="${cariTypeBed()}">Detail</button>
+                
+
+                <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${
+                  rs.id
+                }" data-tipebed="${cariTypeBed()}">Detail<i class="fas fa-arrow-right ms-2"></i></button>
               </div>
             </div>
           </div>
@@ -266,7 +289,11 @@ function tampilDetailRs(detail) {
                           </div>
                           <h4 class="mt-4">${detail.name}</h4>
                           <h5>${detail.address}</h5>
-                          <p>${detail.phone}</p>
+                          ${(() => {
+                            return detail.phone == "hotline tidak tersedia"
+                              ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                              : `<a href="#" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${detail.phone}</a>`;
+                          })()}
 
                           ${room
                             .map((room) => {
@@ -333,6 +360,23 @@ function hidePageLoading() {
   loader.classList.add("none");
   cardRs.style.opacity = "0";
   setTimeout(() => (cardRs.style.opacity = "1"), 100);
+}
+
+function modalLoading() {
+  const loader = `<div class="loader position-absolute top-50 start-50 translate-middle" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container mt-5">
+                      <div class="row justify-content-center">
+                        <div class="col-lg-10 col-12">
+                          <h5 class="display-5 fw-bold">Detail Rumah Sakit</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`;
+
+  sectionDetail.innerHTML = loader;
 }
 
 function cariTypeBed() {
