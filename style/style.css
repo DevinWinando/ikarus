@@ -13,11 +13,7 @@
 }
 
 #hospital {
-  min-height: 70vh;
-}
-
-#footer {
-  margin: 7rem 0 0 0;
+  min-height: 55vh;
 }
 
 h1 .fw-bold {
@@ -96,6 +92,12 @@ h1 .fw-bold {
   animation: spin 1.5s linear infinite;
 }
 
+#footer {
+  margin: 4rem 0 0 0;
+  padding: 3rem 0 0 0;
+  background-color: #f1f1f1;
+}
+
 #form {
   margin-top: 4.5rem;
   background-color: #f1f1f1;
@@ -152,10 +154,6 @@ select:disabled {
   right: 50%;
 }
 
-.none {
-  display: none;
-}
-
 .disabled-link,
 .modal .modal-body a.disabled-link {
   opacity: 0.7;
@@ -164,6 +162,29 @@ select:disabled {
 
 .about a {
   display: block;
+}
+
+.go-up {
+  opacity: 0;
+  position: fixed;
+  right: 2%;
+  bottom: 3%;
+  transform: translateY(100%);
+  transition: all 0.5s;
+}
+
+.appear {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.up {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
 }
 
 @keyframes spin {

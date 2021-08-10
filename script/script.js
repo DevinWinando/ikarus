@@ -4,7 +4,9 @@ const searchBtn = document.querySelector(".search-btn"),
   cardRs = document.querySelector(".cardRs"),
   radio = document.querySelectorAll(".radio-btn"),
   sectionDetail = document.querySelector(".modal-dialog .modal-content "),
-  loader = document.querySelector(".loading");
+  loader = document.querySelector(".loading"),
+  goUp = document.querySelector(".go-up"),
+  modal = document.querySelector("#exampleModal");
 
 let infoRs = ``;
 
@@ -49,8 +51,8 @@ document.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-detail")) {
     modalLoading();
     const detail = await fetchDetailRs(e.target.dataset.idhospital, e.target.dataset.tipebed);
-    console.log(detail);
     tampilDetailRs(detail);
+    modalGoUp();
   }
 });
 
@@ -279,11 +281,14 @@ function tampilRsNonCovid(rs, bed) {
 function tampilDetailRs(detail) {
   const room = detail.bedDetail;
 
-  let detailRs = `<div class="modal-body">
+  let detailRs = `<div class="modal-body detail-rs">
                     <div class="container mt-5">
                       <div class="row justify-content-center">
                         <div class="col-lg-10 col-12">
                           <h5 class="display-5 fw-bold">Detail Rumah Sakit</h5>
+                          <div class="go-up appear">
+                            <button class="btn btn-primary up fw-bold fs-5">^</button>
+                          </div>
                           <div class="d-grid">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="height: 2.8rem">Kembali Ke Daftar</button>
                           </div>
@@ -292,7 +297,7 @@ function tampilDetailRs(detail) {
                           ${(() => {
                             return detail.phone == "hotline tidak tersedia"
                               ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
-                              : `<a href="#" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${detail.phone}</a>`;
+                              : `<a href="tel:${detail.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${detail.phone}</a>`;
                           })()}
 
                           ${room
@@ -353,11 +358,11 @@ function hideSelectLoading(select) {
 }
 
 function pageLoading() {
-  loader.classList.remove("none");
+  loader.classList.remove("d-none");
 }
 
 function hidePageLoading() {
-  loader.classList.add("none");
+  loader.classList.add("d-none");
   cardRs.style.opacity = "0";
   setTimeout(() => (cardRs.style.opacity = "1"), 100);
 }
@@ -390,3 +395,28 @@ function checkRadio1() {
 function checkRadio2() {
   document.getElementById("covidRadios2").checked = "‌​checked";
 }
+
+function modalGoUp() {
+  if (modal.classList.contains("show")) {
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("up")) {
+        const modalBody = document.querySelector(".modal-body");
+        console.log("jalan");
+        modalBody.scrollTo({
+          top: "0",
+          right: "0",
+          behavior: "smooth",
+        });
+      }
+    });
+  }
+}
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  if (y >= 200) {
+    goUp.classList.add("appear");
+  } else {
+    goUp.classList.remove("appear");
+  }
+});
