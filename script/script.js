@@ -32,8 +32,16 @@ document.addEventListener("change", async (e) => {
     searchBtn.dataset.idprov = idProv;
 
     const kota = await fetchKota(idProv);
-    console.log(kota);
     tampilKota(kota);
+  }
+});
+
+// Saat select provinsi dipilih, masukkan id kota yang dipilih pada button search
+document.addEventListener("change", (e) => {
+  if (e.target.classList.contains("kota")) {
+    searchBtn.disabled = false;
+    const idKota = e.target.value;
+    searchBtn.dataset.idkota = idKota;
   }
 });
 
@@ -42,7 +50,6 @@ searchBtn.addEventListener("click", async function () {
   this.dataset.tipebed = cariTypeBed();
 
   const rs = await fetchRs(this.dataset.idprov, this.dataset.idkota, this.dataset.tipebed);
-  console.log(rs);
   tampilCardRs(rs);
 });
 
@@ -62,13 +69,6 @@ async function fetchKota(idProv) {
   try {
     const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-cities?provinceid=" + idProv);
     const cities = await response.json();
-
-    document.addEventListener("change", (e) => {
-      if (e.target.classList.contains("kota")) {
-        const idKota = e.target.value;
-        searchBtn.dataset.idkota = idKota;
-      }
-    });
 
     return cities.cities;
   } catch (err) {
@@ -94,7 +94,7 @@ async function fetchDetailRs(idHospital, tipeBed) {
     const detailRs = await response.json();
     return detailRs.data;
   } catch (e) {
-    return console.log(e);
+    console.log(e);
   }
 }
 
@@ -118,7 +118,6 @@ function tampilKota(kota) {
 }
 
 function tampilCardRs(rs) {
-  console.log(rs);
   hidePageLoading();
   infoRs = `<h3 class="fw-bold mb-4 text-center">Daftar Rumah Sakit</h3>`;
   tipeBed = cariTypeBed();
@@ -149,8 +148,8 @@ function tampilRsCovid(rs) {
                               <p class="card-text">${rs.address}</p>
                               <p class="card-text text-muted">${rs.info}</p>
                             </div>
-                            <div class="col-lg-3 mt-3 me-2 d-flex align-items-center justify-content-center">
-                              <div class="availability d-flex align-items-center justify-content-center flex-wrap">
+                            <div class="col-lg-3 d-lg-flex align-items-center justify-content-center">
+                              <div class="availability mt-3 me-2 d-lg-flex align-items-center justify-content-center flex-wrap">
                                 <h5>Tersedia : ${rs.bed_availability}</h5>
                                 ${(() => {
                                   return rs.queue == 0 ? ` <p class="card-text text-muted">Tanpa Antrean</p> ` : `<p class="card-text text-muted">${rs.queue} Antrean</p>`;
@@ -159,17 +158,16 @@ function tampilRsCovid(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row mt-4 justify-content-center">
+                          <div class="row justify-content-center">
                             <div class="col d-flex align-items-center ">
                             ${(() => {
                               return rs.phone == null
-                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone mt-4 disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
                                 : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
                             })()}
                               
                             </div>
                             <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                              
                               <button type="button" class="btn btn-primary fw-bold btn-detail" data-bs-toggle="modal" data-bs-target="#exampleModal" data-idhospital="${
                                 rs.id
                               }" data-tipebed="${cariTypeBed()}">Detail<i class="fas fa-arrow-right ms-2"></i></button>
@@ -194,11 +192,11 @@ function tampilRsCovidFull(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row mt-4">
+                          <div class="row ">
                             <div class="col">
                             ${(() => {
                               return rs.phone == null
-                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone mt-4 disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
                                 : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
                             })()}
                             </div>
@@ -228,7 +226,7 @@ function tampilRsNonCovid(rs, bed) {
             ${bed
               .map((bed) => {
                 if (bed.available > 0) {
-                  return `<div class="col-4 mt-3 d-flex align-items-center justify-content-center">
+                  return `<div class="col-lg-4 mt-3 d-flex align-items-center justify-content-center">
                             <div class="modal-content border-0 modal-shadow d-flex align-items-center">
                               <div class="modal-body text-center">
                                 <h4>${bed.available}</h4>
@@ -241,7 +239,7 @@ function tampilRsNonCovid(rs, bed) {
                             </div>
                           </div>`;
                 } else {
-                  return `<div class="col-4 mt-3 d-flex align-items-center justify-content-center ">
+                  return `<div class="col-lg-4 mt-3 d-flex align-items-center justify-content-center ">
                             <div class="modal-content modal-shadow d-flex align-items-center full">
                               <div class="modal-body text-center ">
                                 <h4 class="color-dg">${bed.available}</h4>
@@ -281,13 +279,13 @@ function tampilRsNonCovid(rs, bed) {
 function tampilDetailRs(detail) {
   const room = detail.bedDetail;
 
-  let detailRs = `<div class="modal-body detail-rs">
+  let detailRs = `<div class="modal-body detail-rs modal-main">
                     <div class="container mt-5">
                       <div class="row justify-content-center">
                         <div class="col-lg-10 col-12">
                           <h5 class="display-5 fw-bold">Detail Rumah Sakit</h5>
                           <div class="go-up appear">
-                            <button class="btn btn-primary up fw-bold fs-5">^</button>
+                            <button class="btn btn-primary up fw-bold fs-5" onclick="modalGoUp()">^</button>
                           </div>
                           <div class="d-grid">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="height: 2.8rem">Kembali Ke Daftar</button>
@@ -368,7 +366,7 @@ function hidePageLoading() {
 }
 
 function modalLoading() {
-  const loader = `<div class="loader position-absolute top-50 start-50 translate-middle" role="status">
+  const loader = `<div class="loader" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
                   <div class="modal-body">
@@ -398,16 +396,11 @@ function checkRadio2() {
 
 function modalGoUp() {
   if (modal.classList.contains("show")) {
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("up")) {
-        const modalBody = document.querySelector(".modal-body");
-        console.log("jalan");
-        modalBody.scrollTo({
-          top: "0",
-          right: "0",
-          behavior: "smooth",
-        });
-      }
+    const modalBody = document.querySelector(".modal-main");
+    modalBody.scrollTo({
+      top: "0",
+      right: "0",
+      behavior: "smooth",
     });
   }
 }

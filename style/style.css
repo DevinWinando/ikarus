@@ -96,6 +96,7 @@ h1 .fw-bold {
   margin: 4rem 0 0 0;
   padding: 3rem 0 0 0;
   background-color: #f1f1f1;
+  color: rgb(39, 39, 39);
 }
 
 #form {
@@ -162,6 +163,29 @@ select:disabled {
 
 .about a {
   display: block;
+  margin-bottom: 0.8rem;
+}
+
+.about .contact a {
+  display: inline;
+}
+
+#footer h5 {
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+}
+
+#footer p {
+  font-size: 1rem;
+}
+
+#footer a {
+  text-decoration: none;
+  color: rgb(0, 19, 194);
+}
+
+#footer a:hover {
+  text-decoration: underline;
 }
 
 .go-up {
@@ -197,10 +221,27 @@ select:disabled {
 }
 
 @media screen and (max-width: 768px) {
+  .mc {
+    margin: 1rem 0 0 0;
+  }
+
+  .btn-phone,
+  .btn-loc,
+  .btn-detail,
+  .availability {
+    width: 100%;
+  }
+
   .btn-phone,
   .btn-loc,
   .btn-detail {
-    width: 100%;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .availability {
+    text-align: center;
+    margin: 1.5rem 0 0 0;
+    padding: 0;
   }
 
   .btn-loc,
@@ -210,14 +251,26 @@ select:disabled {
 
   .full .availability {
     height: 3rem;
-    width: 100%;
-    background-color: red;
-    border-radius: 5%;
   }
 
   .loader {
     position: absolute;
     top: 50%;
     right: 40%;
+  }
+
+  #footer {
+    text-align: center;
+  }
+
+  .tentang {
+    margin-bottom: 2rem;
+  }
+  .situs {
+    margin-bottom: 2rem;
+  }
+
+  .footer .row:nth-child(2) {
+    margin-top: 100rem;
   }
 }
