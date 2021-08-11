@@ -158,11 +158,11 @@ function tampilRsCovid(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row justify-content-center">
+                          <div class="row justify-content-center mt-lg-4">
                             <div class="col d-flex align-items-center ">
                             ${(() => {
                               return rs.phone == null
-                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone mt-4 disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
                                 : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
                             })()}
                               
@@ -192,11 +192,11 @@ function tampilRsCovidFull(rs) {
                               </div>
                             </div>
                           </div>
-                          <div class="row ">
+                          <div class="row mt-lg-4 ">
                             <div class="col">
                             ${(() => {
                               return rs.phone == null
-                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone mt-4 disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
+                                ? ` <a href="/" onclick="return false;" class="btn btn-primary fw-bold btn-phone disabled-link"><i class="fas fa-phone me-2"></i>Tidak Tersedia</a> `
                                 : `<a href="tel:${rs.phone}" class="btn btn-primary fw-bold btn-phone"><i class="fas fa-phone me-2"></i>${rs.phone}</a>`;
                             })()}
                             </div>
@@ -256,7 +256,7 @@ function tampilRsNonCovid(rs, bed) {
               .join("")}
               
             </div>
-            <div class="row mt-5 justify-content-center">
+            <div class="row mt-lg-4 justify-content-center">
               <div class="col d-flex align-items-center">
               ${(() => {
                 return rs.phone == null
