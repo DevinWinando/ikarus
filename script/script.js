@@ -11,18 +11,9 @@ const searchBtn = document.querySelector(".search-btn"),
 let infoRs = ``;
 
 // Fetch data provinsi lalu tampilkan pada select provinsi
-window.addEventListener("load", () => {
-  selectLoading(selectProv);
-  fetch("https://rs-bed-covid-api.vercel.app/api/get-provinces")
-    .then((response) => response.json())
-    .then(function (prov) {
-      hideSelectLoading(selectProv);
-      const provinsi = prov.provinces;
-      tampilProvinsi(provinsi);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+window.addEventListener("load", async () => {
+  const provinsi = await fetchProvinsi();
+  tampilProvinsi(provinsi);
 });
 
 //Saat select provinsi dipilih, lakukan fetch data kota lalu tampilkan pada select kota
@@ -53,17 +44,40 @@ searchBtn.addEventListener("click", async function () {
   tampilCardRs(rs);
 });
 
-// Saat detail button diclick, lakukan fetch detail, lalu tampilkan data tersebut
+// Saat detail button diclick, lakukan fetch detail RS, lalu tampilkan data tersebut
 document.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-detail")) {
     modalLoading();
     const detail = await fetchDetailRs(e.target.dataset.idhospital, e.target.dataset.tipebed);
+
     tampilDetailRs(detail);
     modalGoUp();
   }
 });
 
-// Function-function yang diperlukan
+// Function-function
+async function fetchProvinsi() {
+  selectLoading(selectProv);
+  try {
+    const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-provinces");
+    const provinsi = await response.json();
+
+    return provinsi.provinces;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function tampilProvinsi(provinsi) {
+  hideSelectLoading(selectProv);
+  let optionProv = `<option value="" disabled selected hidden>Pilih Provinsi</option>`;
+
+  provinsi.forEach((provinsi) => {
+    optionProv += `<option value="${provinsi.id}" class="option-provinsi">${provinsi.name}</option>`;
+  });
+  selectProv.innerHTML = optionProv;
+}
+
 async function fetchKota(idProv) {
   selectLoading(selectKota);
   try {
@@ -76,6 +90,16 @@ async function fetchKota(idProv) {
   }
 }
 
+function tampilKota(kota) {
+  hideSelectLoading(selectKota);
+  let optionKota = `<option value="" disabled selected hidden>Pilih Kota</option>`;
+
+  kota.forEach((kota) => {
+    optionKota += `<option value="${kota.id}" class="option-kota">${kota.name}</option>`;
+  });
+  selectKota.innerHTML = optionKota;
+}
+
 async function fetchRs(idProv, idKota, tipeBed) {
   pageLoading();
   try {
@@ -86,35 +110,6 @@ async function fetchRs(idProv, idKota, tipeBed) {
   } catch (err) {
     console.log(err);
   }
-}
-
-async function fetchDetailRs(idHospital, tipeBed) {
-  try {
-    const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-bed-detail?hospitalid=" + idHospital + "&type=" + tipeBed);
-    const detailRs = await response.json();
-    return detailRs.data;
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-function tampilProvinsi(provinsi) {
-  let optionProv = `<option value="" disabled selected hidden>Pilih Provinsi</option>`;
-
-  provinsi.forEach((provinsi) => {
-    optionProv += `<option value="${provinsi.id}" class="option-provinsi">${provinsi.name}</option>`;
-  });
-  selectProv.innerHTML = optionProv;
-}
-
-function tampilKota(kota) {
-  hideSelectLoading(selectKota);
-  let optionKota = `<option value="" disabled selected hidden>Pilih Kota</option>`;
-
-  kota.forEach((kota) => {
-    optionKota += `<option value="${kota.id}" class="option-kota">${kota.name}</option>`;
-  });
-  selectKota.innerHTML = optionKota;
 }
 
 function tampilCardRs(rs) {
@@ -137,6 +132,16 @@ function tampilCardRs(rs) {
   });
 
   cardRs.innerHTML = infoRs;
+}
+
+async function fetchDetailRs(idHospital, tipeBed) {
+  try {
+    const response = await fetch("https://rs-bed-covid-api.vercel.app/api/get-bed-detail?hospitalid=" + idHospital + "&type=" + tipeBed);
+    const detailRs = await response.json();
+    return detailRs.data;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function tampilRsCovid(rs) {
@@ -285,7 +290,7 @@ function tampilDetailRs(detail) {
                         <div class="col-lg-10 col-12">
                           <h5 class="display-5 fw-bold">Detail Rumah Sakit</h5>
                           <div class="go-up appear">
-                            <button class="btn btn-primary up fw-bold fs-5" onclick="modalGoUp()">^</button>
+                            <button class="btn btn-primary up fw-bold fs-5" onclick="modalGoUp()"><i class="fas fa-angle-up"></i></button>
                           </div>
                           <div class="d-grid">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="height: 2.8rem">Kembali Ke Daftar</button>
