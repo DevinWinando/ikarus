@@ -27,7 +27,7 @@ document.addEventListener("change", async (e) => {
   }
 });
 
-// Saat select provinsi dipilih, masukkan id kota yang dipilih pada button search
+// Saat select kota dipilih, masukkan id kota yang dipilih pada button search
 document.addEventListener("change", (e) => {
   if (e.target.classList.contains("kota")) {
     searchBtn.disabled = false;
@@ -51,7 +51,6 @@ document.addEventListener("click", async (e) => {
     const detail = await fetchDetailRs(e.target.dataset.idhospital, e.target.dataset.tipebed);
 
     tampilDetailRs(detail);
-    modalGoUp();
   }
 });
 
