@@ -6,4 +6,5 @@ Fitur :
 - Menampilkan detail ketersediaan kamar rumah sakit
 
 API Source : https://rs-bed-covid-api.vercel.app/
+
 Link Website : https://devinwinando.github.io/ikarus
