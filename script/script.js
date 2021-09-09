@@ -150,7 +150,9 @@ function tampilRsCovid(rs) {
                             <div class="col">
                               <h5 class="card-title">${rs.name}</h5>
                               <p class="card-text">${rs.address}</p>
-                              <p class="card-text text-muted">${rs.info}</p>
+                              ${(() => {
+                                return rs.info == null ? `<p class="card-text text-muted">terjadi kesalahan pada data</p>` : `<p class="card-text text-muted">${rs.info}</p>`;
+                              })()}
                             </div>
                             <div class="col-lg-3 d-lg-flex align-items-center justify-content-center">
                               <div class="availability mt-3 me-2 d-lg-flex align-items-center justify-content-center flex-wrap">
@@ -188,7 +190,9 @@ function tampilRsCovidFull(rs) {
                             <div class="col">
                               <h5 class="card-title">${rs.name}</h5>
                               <p class="card-text">${rs.address}</p>
-                              <p class="card-text text-muted">${rs.info}</p>
+                              ${(() => {
+                                return rs.info == null ? `<p class="card-text text-muted">terjadi kesalahan pada data</p>` : `<p class="card-text text-muted">${rs.info}</p>`;
+                              })()}
                             </div>
                             <div class="col-lg-2 d-flex align-items-center justify-content-center">
                               <div class="availability d-flex align-items-center justify-content-center">
@@ -223,7 +227,9 @@ function tampilRsNonCovid(rs, bed) {
               <div class="col">
                 <h5 class="card-title">${rs.name}</h5>
                 <p class="card-text">${rs.address}</p>
-                <p class="card-text text-muted">${rs.info}</p>
+                ${(() => {
+                  return rs.info == null ? `<p class="card-text text-muted">terjadi kesalahan pada data</p>` : `<p class="card-text text-muted">${rs.info}</p>`;
+                })()}
               </div>
             </div>
             <div class="row justify-content-center align-items-start">
