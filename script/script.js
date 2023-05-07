@@ -31,7 +31,7 @@ document.addEventListener("change", async (e) => {
 document.addEventListener("change", (e) => {
   if (e.target.classList.contains("kota")) {
     searchBtn.disabled = false;
-    const idKota = e.target.value;
+    const idKot = e.target.value;
     searchBtn.dataset.idkota = idKota;
   }
 });
